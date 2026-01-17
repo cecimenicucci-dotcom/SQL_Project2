@@ -19,20 +19,13 @@ where actor_id between 30 and 40;
 /*In the below case, it looks like there is no original id assigned to any movie in the film table. 
 The result in this case would be 0.
 */
-select f."title" as "Titulo pelicula",
-        l."name" as "Idioma original"
-from film as f 
-inner join "language" as l 
-on f.original_language_id  = l.language_id ;
+SELECT COUNT(*) as "Orginal language ID"
+FROM film
+WHERE original_language_id IS NOT NULL;
 
-/*About number 4, in this case, it is possible to check the language of each movie, 
- *however not necessaly know if it is the original language.
- */ 
-select f.title as "Pelicula",
-       l."name" as "Idioma"
-from film as f 
-inner join "language" as l 
-on f.language_id  = l.language_id ;
+SELECT f.title as "Title movie"
+FROM film f
+WHERE f.language_id = f.original_language_id;
 
 -- 5. Ordena las películas por duración de forma ascendente.
 select "film_id" , "title" as "Titulo pelicula", 
