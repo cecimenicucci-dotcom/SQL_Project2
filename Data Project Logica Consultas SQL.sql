@@ -593,8 +593,12 @@ select c.first_name as "Nombre cliente",
 from customer c 
  inner join rental r 
  on c.customer_id = r.customer_id 
+  inner join inventory i 
+  on r.inventory_id = i.inventory_id 
+   inner join film f 
+   on i.film_id = f.film_id 
 group by c.customer_id 
-having count(distinct r.rental_id) >=7
+having count(distinct f.film_id) >=7
 order by "Apellido" ; 
 
 -- 61. Encuentra la cantidad total de películas alquiladas por categoría 
