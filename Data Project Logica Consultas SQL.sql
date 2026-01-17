@@ -524,21 +524,18 @@ where r.rental_date >
 order by "Apellido" ;
 
 -- 56. Encuentra el nombre y apellido de los actores que no han actuado en ninguna película de la categoría ‘Music’.
-select distinct
-       a.actor_id ,
-       a.first_name as "Nombre actor",
-       a.last_name as "Apellido",
-       c."name" as "Category"
-from actor a 
-    left join film_actor fa 
-    on a.actor_id = fa.actor_id 
-     left join film f 
-     on fa.film_id = f.film_id 
-      left join film_category fc 
-      on f.film_id = fc.film_id 
-       left join category c 
-       on fc.category_id = c.category_id 
-       where c."name" not in('Music') ;
+select a.first_name as "Nombre actor",
+       a.last_name  as "Apellido"
+from actor a
+where not exists (
+    select 1
+    from film_actor fa
+      join film_category fc 
+      on fa.film_id = fc.film_id
+      join category c       
+      on fc.category_id = c.category_id
+    where fa.actor_id = a.actor_id
+      and c.name = 'Music' ) ;
 
 -- 57. Encuentra el título de todas las películas que fueron alquiladas por más de 8 días.
 select distinct 
