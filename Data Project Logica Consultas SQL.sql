@@ -180,12 +180,11 @@ where length >
        from film );
 
 -- 25. Averigua el número de alquileres registrados por mes.
--- Not sure how to this this one!
-select date_trunc('month', "rental_date") as "Month",
-       count(*) as "Total rentals"
+select DATE_TRUNC('month', rental_date) AS "Month",
+       COUNT(*) AS "Total rentals"
 from rental
-group by "Month" 
-order by "Month" ;
+group by DATE_TRUNC('month', rental_date)
+order by "Month";
 
 -- 26. Encuentra el promedio, la desviación estándar y varianza del total pagado.
 select round(avg(amount),2) as "Promedio Total Pagado",
