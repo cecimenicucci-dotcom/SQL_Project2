@@ -165,9 +165,9 @@ from actor ;
 
 -- 23. Números de alquiler por día, ordenados por cantidad de alquiler de forma descendente.
 select count(*) as "Total rentals", 
-       r.rental_date as "Rental day"
+       DATE(r.rental_date) as "Rental day"
 from rental r 
-group by r.rental_date
+group by DATE(r.rental_date)
 order by "Total rentals" desc ;
 
 -- 24. Encuentra las películas con una duración superior al promedio.
