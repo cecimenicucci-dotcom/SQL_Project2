@@ -538,16 +538,15 @@ where not exists (
       and c.name = 'Music' ) ;
 
 -- 57. Encuentra el título de todas las películas que fueron alquiladas por más de 8 días.
-select distinct 
-      f.title as "Titulo pelicula" ,
-      f.rental_duration 
+select distinct
+       f.title AS "Titulo pelicula"
 from film f
-group by f.film_id 
-having f.rental_duration > 8 ;
-/* I don´t think this is correct, cause I belive the rental durantion means the days a customer can rent the movie for. 
- * It might be on the rental table where to calculate rental return date and rental date.
- *  Not sure how to find the rental' days - need support.
- */      
+  join inventory i 
+  on f.film_id = i.film_id
+   join rental r    
+   on i.inventory_id = r.inventory_id
+where r.return_date is not null
+  and (r.return_date - r.rental_date) > interval '8 days';    
 
 -- 58. Encuentra el título de todas las películas que son de la misma categoría que ‘Animation’.
 select f.title as "Titulo pelicula",
