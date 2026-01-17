@@ -262,14 +262,12 @@ from film f
 order by "Pelicula" ;
 
 -- 34. Encuentra los 5 clientes que más dinero se hayan gastado con nosotros.
-select 
-      concat(c.first_name , ' ', c.last_name) as "Nombre completo client",
-      (
-        select sum(p.amount)
-        from payment p  
-        where p.customer_id  = c.customer_id 
-    ) as "Total paid"      
+select CONCAT(c.first_name, ' ', c.last_name) AS "Customer",
+       SUM(p.amount) AS "Total paid"
 from customer c
+ inner join payment p
+       on c.customer_id = p.customer_id
+group by c.customer_id, c.first_name, c.last_name
 order by "Total paid" desc
 limit 5;
 
